@@ -17,7 +17,7 @@ export default async function Home() {
             <UserButton afterSignOutUrl="/" />
           </div>
           <div className="flex mt-4">
-            {isAuth && <Button>Go to Chats</Button>}
+            {isAuth && <Button>Go to Conversations</Button>}
           </div>
           <div className="w-full mt-4">
             {isAuth ? (
