@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 
 const FileUpload = () => {
   const [uploading, setUploading] = useState(false);
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async ({
       fileKey,
       fileName,
@@ -74,7 +74,7 @@ const FileUpload = () => {
         })}
       >
         <input {...getInputProps()} />
-        {uploading || isLoading ? (
+        {uploading || isPending ? (
           <>
             <Loader2 className="h-10 w-10 mr-2 text-blue-500 animate-spin" />
             <p className="mt-2 text-sm text-slate-400">
