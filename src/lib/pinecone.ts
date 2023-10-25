@@ -1,12 +1,12 @@
-import { Pinecone, PineconeRecord } from "@pinecone-database/pinecone";
-import { downloadFromS3 } from "./s3-server";
-import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import {
   Document,
   RecursiveCharacterTextSplitter,
 } from "@pinecone-database/doc-splitter";
-import { getEmbeddings } from "./embeddings";
+import { Pinecone, PineconeRecord } from "@pinecone-database/pinecone";
+import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import md5 from "md5";
+import { getEmbeddings } from "./embeddings";
+import { downloadFromS3 } from "./s3-server";
 
 export const getPineconeClient = () => {
   return new Pinecone({
@@ -38,7 +38,13 @@ export async function loadS3IntoPinecone(fileKey: string) {
   // vectorize and embed docs
   const vectors = await Promise.all(documents.flat().map(embedDocument));
 
-  return pages;
+  // upload to pinecone
+  const client = await getPineconeClient();
+  const pineconeIndex = await client.index("talk-to-your-pdf");
+  console.log("Inserting vectors into pinecone.");
+  await pineconeIndex.upsert(vectors);
+
+  return documents[0];
 }
 
 async function prepareDocument(page: PDFPage) {
