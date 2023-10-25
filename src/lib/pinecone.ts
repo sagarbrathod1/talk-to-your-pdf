@@ -1,10 +1,12 @@
-import { Pinecone } from "@pinecone-database/pinecone";
+import { Pinecone, PineconeRecord } from "@pinecone-database/pinecone";
 import { downloadFromS3 } from "./s3-server";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import {
   Document,
   RecursiveCharacterTextSplitter,
 } from "@pinecone-database/doc-splitter";
+import { getEmbeddings } from "./embeddings";
+import md5 from "md5";
 
 export const getPineconeClient = () => {
   return new Pinecone({
@@ -33,6 +35,9 @@ export async function loadS3IntoPinecone(fileKey: string) {
   // split and segment the pdf
   const documents = await Promise.all(pages.map(prepareDocument));
 
+  // vectorize and embed docs
+  const vectors = await Promise.all(documents.flat().map(embedDocument));
+
   return pages;
 }
 
@@ -56,3 +61,21 @@ export const truncateStringByBytes = (str: string, bytes: number) => {
   const encoder = new TextEncoder();
   return new TextDecoder("utf-8").decode(encoder.encode(str).slice(0, bytes));
 };
+
+async function embedDocument(doc: Document) {
+  try {
+    const embeddings = await getEmbeddings(doc.pageContent);
+    const hash = md5(doc.pageContent);
+    return {
+      id: hash,
+      values: embeddings,
+      metadata: {
+        text: doc.metadata.text,
+        pageNumber: doc.metadata.pageNumber,
+      },
+    } as PineconeRecord;
+  } catch (error) {
+    console.log("Error embedding the document.", error);
+    throw error;
+  }
+}
