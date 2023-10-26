@@ -20,7 +20,7 @@ const FileUpload = () => {
       fileKey: string;
       fileName: string;
     }) => {
-      const response = await axios.post("/api/create-chat", {
+      const response = await axios.post("/api/create-conversation", {
         fileKey,
         fileName,
       });
@@ -51,11 +51,11 @@ const FileUpload = () => {
         }
         mutate(data, {
           onSuccess: ({ conversationId }) => {
-            toast.success("Chat created!");
-            router.push("/chat/${conversationId}");
+            toast.success("Conversation created!");
+            router.push("/conversation/${conversationId}");
           },
           onError: (error) => {
-            toast.error("Error creating chat!");
+            toast.error("Error creating conversation!");
             console.log(error);
           },
         });

@@ -19,9 +19,11 @@ export const conversations = pgTable("conversations", {
   fileKey: text("file_key").notNull(),
 });
 
+export type DrizzleConversation = typeof conversations.$inferSelect;
+
 export const messages = pgTable("messages", {
   id: serial("id").primaryKey(),
-  chatId: integer("chat_id")
+  conversationId: integer("conversation_id")
     .references(() => conversations.id)
     .notNull(),
   content: text("content").notNull(),

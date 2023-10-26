@@ -41,7 +41,7 @@ export async function loadS3IntoPinecone(fileKey: string) {
   // upload to pinecone
   const client = await getPineconeClient();
   const pineconeIndex = await client.index("talk-to-your-pdf");
-  console.log("Inserting vectors into pinecone.");
+  console.log("Inserting vectors into Pinecone.");
   await pineconeIndex.upsert(vectors);
 
   return documents[0];
