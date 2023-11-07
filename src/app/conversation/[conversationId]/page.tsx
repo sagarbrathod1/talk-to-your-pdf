@@ -1,3 +1,4 @@
+import ConversationComponent from "@/components/ConversationComponent";
 import ConversationSideBar from "@/components/ConversationSideBar";
 import PDFViewer from "@/components/PDFViewer";
 import { db } from "@/lib/db";
@@ -48,7 +49,9 @@ const ConversationPage = async ({ params: { conversationId } }: Props) => {
         <div className="max-h-screen p-4 oveflow-scroll flex-[5]">
           <PDFViewer pdf_url={currentConversation?.pdfUrl || ""} />
         </div>
-        <div className="flex-[3] border-l-4 border-l-slate-200"></div>
+        <div className="flex-[3] border-l-4 border-l-slate-200">
+          <ConversationComponent />
+        </div>
       </div>
     </div>
   );
