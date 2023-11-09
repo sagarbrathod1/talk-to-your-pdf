@@ -32,8 +32,6 @@ const FileUpload = () => {
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
     onDrop: async (acceptedFiles) => {
-      console.log(acceptedFiles);
-      setUploading(true);
       const file = acceptedFiles[0];
 
       if (file.size > 10 * 1024 * 1024) {
@@ -43,6 +41,7 @@ const FileUpload = () => {
       }
 
       try {
+        setUploading(true);
         const data = await uploadToS3(file);
         if (!data?.fileKey || !data?.fileName) {
           toast.error("Something went wrong!");
@@ -59,7 +58,6 @@ const FileUpload = () => {
             console.log(error);
           },
         });
-        console.log("data", data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -76,7 +74,7 @@ const FileUpload = () => {
         })}
       >
         <input {...getInputProps()} />
-        {uploading || isPending ? (
+        {uploading ? (
           <>
             <Loader2 className="h-10 w-10 mr-2 text-blue-500 animate-spin" />
             <p className="mt-2 text-sm text-slate-400">

@@ -29,6 +29,7 @@ export async function loadS3IntoPinecone(fileKey: string) {
   if (!fileName) {
     throw new Error("Could not download from S3.");
   }
+  console.log("Loading PDF into memory", fileName);
   const loader = new PDFLoader(fileName);
   const pages = (await loader.load()) as PDFPage[];
 
