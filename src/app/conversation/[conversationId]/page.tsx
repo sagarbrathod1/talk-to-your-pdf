@@ -50,7 +50,7 @@ const ConversationPage = async ({ params: { conversationId } }: Props) => {
           <PDFViewer pdf_url={currentConversation?.pdfUrl || ""} />
         </div>
         <div className="flex-[3] border-l-4 border-l-slate-200">
-          <ConversationComponent />
+          <ConversationComponent conversationId={parseInt(conversationId)} />
         </div>
       </div>
     </div>
