@@ -23,7 +23,7 @@ export type DrizzleConversation = typeof conversations.$inferSelect;
 
 export const messages = pgTable("messages", {
   id: serial("id").primaryKey(),
-  conversationId: integer("conversation_id")
+  conversationId: integer("chat_id") // neondb fix
     .references(() => conversations.id)
     .notNull(),
   content: text("content").notNull(),
