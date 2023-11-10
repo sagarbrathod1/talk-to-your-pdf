@@ -8,12 +8,10 @@ export const runtime = "edge";
 export const POST = async (req: Request) => {
   try {
     const { conversationId } = await req.json();
-    console.log("meow", conversationId);
     const _messages = await db
       .select()
       .from(messages)
       .where(eq(messages.conversationId, conversationId));
-    console.log("hello", _messages);
     return NextResponse.json(_messages);
   } catch (error) {
     console.error(error);
