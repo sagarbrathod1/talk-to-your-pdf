@@ -41,7 +41,9 @@ const ConversationSideBar = ({ conversations, conversationId }: Props) => {
       <div className="mt-auto">
         <div className="flex items-center gap-2 text-sm text-slate-500 flex-wrap">
           <Link href="/">Home</Link>
-          <Link href="/">Source</Link>
+          <Link href="https://github.com/sagarbrathod1/talk-to-your-pdf">
+            Source
+          </Link>
         </div>
       </div>
     </div>
