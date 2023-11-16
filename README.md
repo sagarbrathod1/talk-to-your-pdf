@@ -16,3 +16,4 @@ Start a conversation with your PDF!
 | ORM             | [DrizzleORM](https://orm.drizzle.team/)       |
 | Vector Database | [Pinecone](https://www.pinecone.io/)          |
 | AI API          | [OpenAI](https://openai.com/blog/openai-api)  |
+| AI SDK          | [Vercel AI](https://sdk.vercel.ai/docs)          |
