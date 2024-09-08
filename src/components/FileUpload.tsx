@@ -66,7 +66,7 @@ const FileUpload = () => {
     },
   });
   return (
-    <div className="p-2 bg-white rounded-xl">
+    <div className="p-2 bg-white rounded-xl w-full max-w-xl">
       <div
         {...getRootProps({
           className:

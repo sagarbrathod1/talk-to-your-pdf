@@ -1,11 +1,13 @@
+import React from "react";
 import FileUpload from "@/components/FileUpload";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { conversations } from "@/lib/db/schema";
 import { UserButton, auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
-import { ArrowRight, LogIn } from "lucide-react";
+import { ArrowRight, LogIn, FileText, MessageSquare, Zap } from "lucide-react";
 import Link from "next/link";
+import FeatureCard from "@/components/FeatureCard";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -23,41 +25,71 @@ export default async function Home() {
   }
 
   return (
-    <div className="w-screen min-h-screen bg-gradient-to-r from-pink-100 to-blue-100">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="flex flex-col items-center text-center">
-          <div className="flex items-center">
-            <h1 className="mr-3 text-5xl font-semibold">Talk to your PDF</h1>
-            <UserButton afterSignOutUrl="/" />
+    <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
+      <nav className="p-4 flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Talk2PDF</h1>
+        <UserButton afterSignOutUrl="/" />
+      </nav>
+
+      <main className="container mx-auto px-4 py-16 flex flex-col min-h-screen justify-between">
+        <div>
+          {" "}
+          <div className={`text-center mb-${isAuth ? "24" : "48"}`}>
+            <h2 className="text-5xl font-extrabold mb-4">
+              Converse with your Documents
+            </h2>
+            <p className="text-xl text-gray-600">
+              Upload a PDF and start a conversation with AI
+            </p>
           </div>
-          {/* <div className="flex mt-4">
-            {isAuth && <Button>Go to Conversations</Button>}
-          </div> */}
-          <div className="flex mt-4">
-            {isAuth && firstChat && (
-              <>
-                <Link href={`/conversation/${firstChat.id}`}>
-                  <Button>
-                    Go to Conversations <ArrowRight className="ml-2" />
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
-          <div className="w-full mt-4">
+          <div className={`flex justify-center ${isAuth ? "mb-24" : ""}`}>
             {isAuth ? (
               <FileUpload />
             ) : (
               <Link href="/sign-in">
-                <Button>
-                  Login
-                  <LogIn className="w-4 h-4 ml-2" />
+                <Button
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Get Started
+                  <LogIn className="ml-2" />
                 </Button>
               </Link>
             )}
           </div>
+          {isAuth && firstChat && (
+            <div className="text-center">
+              <Link href={`/conversation/${firstChat.id}`}>
+                <Button
+                  size="lg"
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                  Go to Conversations
+                  <ArrowRight className="ml-2" />
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
-      </div>
+
+        <div className={`grid md:grid-cols-3 gap-8 mb-12 mt-8`}>
+          <FeatureCard
+            icon={<FileText className="w-12 h-12 text-blue-500" />}
+            title="PDF Upload"
+            description="Easily upload your PDF documents"
+          />
+          <FeatureCard
+            icon={<MessageSquare className="w-12 h-12 text-purple-500" />}
+            title="AI Conversation"
+            description="Engage in intelligent conversations about your document"
+          />
+          <FeatureCard
+            icon={<Zap className="w-12 h-12 text-yellow-500" />}
+            title="Instant Insights"
+            description="Get quick answers and analysis from your PDFs"
+          />
+        </div>
+      </main>
     </div>
   );
 }
