@@ -5,7 +5,14 @@ import { db } from "@/lib/db";
 import { conversations } from "@/lib/db/schema";
 import { UserButton, auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
-import { ArrowRight, LogIn, FileText, MessageSquare, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  LogIn,
+  FileText,
+  MessageSquare,
+  Zap,
+  Github,
+} from "lucide-react";
 import Link from "next/link";
 import FeatureCard from "@/components/FeatureCard";
 
@@ -28,7 +35,17 @@ export default async function Home() {
     <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
       <nav className="p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Talk2PDF</h1>
-        <UserButton afterSignOutUrl="/" />
+        <div className="flex items-center space-x-4">
+          <a
+            href="https://github.com/sagarbrathod1/talk-to-your-pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-700 hover:text-gray-900"
+          >
+            <Github className="w-8 h-8" />
+          </a>
+          <UserButton afterSignOutUrl="/" />
+        </div>
       </nav>
 
       <main className="container mx-auto px-4 py-16 flex flex-col min-h-screen justify-between">
