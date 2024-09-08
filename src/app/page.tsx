@@ -32,7 +32,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
       <nav className="p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Talk2PDF</h1>
         <div className={`flex items-center ${isAuth ? "space-x-4" : ""}`}>
@@ -48,50 +48,50 @@ export default async function Home() {
         </div>
       </nav>
 
-      <main className="container mx-auto px-4 py-16 flex flex-col min-h-screen justify-between">
-        <div>
-          {" "}
-          <div className={`text-center mb-24`}>
-            <h2 className="text-5xl font-extrabold mb-4">
+      <main className="flex-grow flex flex-col justify-between px-4 py-8 lg:py-16 overflow-auto">
+        <div className="flex-grow flex flex-col items-center justify-center">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-4">
               Converse with your Documents
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-lg lg:text-xl text-gray-600 mb-8">
               Upload a PDF and start a conversation with AI
             </p>
-          </div>
-          <div className={`flex justify-center ${isAuth ? "mb-24" : ""}`}>
+
             {isAuth ? (
-              <FileUpload />
+              <>
+                <div className="w-full flex justify-center">
+                  <FileUpload />
+                </div>
+                {firstChat && (
+                  <div className="text-center mt-8">
+                    <Link href={`/conversation/${firstChat.id}`}>
+                      <Button
+                        size="lg"
+                        className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                      >
+                        Go to Conversations
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="flex flex-col items-center justify-center mt-12">
-                <Link href="/sign-in">
-                  <Button
-                    size="lg"
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
-                  >
-                    Get Started
-                    <LogIn className="ml-2" />
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
-          {isAuth && firstChat && (
-            <div className="text-center">
-              <Link href={`/conversation/${firstChat.id}`}>
+              <Link href="/sign-in">
                 <Button
                   size="lg"
-                  className="bg-green-600 hover:bg-green-700 text-white"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 mt-8 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"
                 >
-                  Go to Conversations
-                  <ArrowRight className="ml-2" />
+                  Get Started
+                  <LogIn className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
-        <div className={`grid md:grid-cols-3 gap-8 mb-12 mt-8`}>
+        <div className="grid md:grid-cols-3 gap-8 mt-8 lg:mt-16">
           <FeatureCard
             icon={<FileText className="w-12 h-12 text-blue-500" />}
             title="PDF Upload"
