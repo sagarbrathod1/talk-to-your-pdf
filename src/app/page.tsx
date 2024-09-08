@@ -35,7 +35,7 @@ export default async function Home() {
     <div className="min-h-screen bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100">
       <nav className="p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Talk2PDF</h1>
-        <div className="flex items-center space-x-4">
+        <div className={`flex items-center ${isAuth ? "space-x-4" : ""}`}>
           <a
             href="https://github.com/sagarbrathod1/talk-to-your-pdf"
             target="_blank"
@@ -51,7 +51,7 @@ export default async function Home() {
       <main className="container mx-auto px-4 py-16 flex flex-col min-h-screen justify-between">
         <div>
           {" "}
-          <div className={`text-center mb-${isAuth ? "24" : "48"}`}>
+          <div className={`text-center mb-24`}>
             <h2 className="text-5xl font-extrabold mb-4">
               Converse with your Documents
             </h2>
@@ -63,15 +63,17 @@ export default async function Home() {
             {isAuth ? (
               <FileUpload />
             ) : (
-              <Link href="/sign-in">
-                <Button
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
-                >
-                  Get Started
-                  <LogIn className="ml-2" />
-                </Button>
-              </Link>
+              <div className="flex flex-col items-center justify-center mt-12">
+                <Link href="/sign-in">
+                  <Button
+                    size="lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    Get Started
+                    <LogIn className="ml-2" />
+                  </Button>
+                </Link>
+              </div>
             )}
           </div>
           {isAuth && firstChat && (
